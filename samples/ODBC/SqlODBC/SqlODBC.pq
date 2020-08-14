@@ -21,7 +21,7 @@ EnableTraceOutput = true;
 
 // The name of your ODBC driver.
 //
-Config_DriverName = "SQL Server Native Client 11.0";
+Config_DriverName = "Simba Athena ODBC Driver";
 
 // If your driver under-reports its SQL conformance level because it does not
 // support the full range of CRUD operations, but does support the ANSI SQL required
@@ -79,7 +79,7 @@ Config_SqlConformance = ODBC[SQL_SC][SQL_SC_SQL92_FULL];  // null, 1, 2, 4, 8
 // OFFSET 200 ROWS
 // FETCH FIRST 100 ROWS ONLY
 //
-Config_LimitClauseKind = LimitClauseKind.Top; // see above
+Config_LimitClauseKind = LimitClauseKind.Limit; // see above
 
 // Set this option to true if your ODBC supports the standard username/password 
 // handling through the UID and PWD connection string parameters. If the user 
@@ -99,7 +99,7 @@ Config_DefaultUsernamePasswordHandling = true;  // true, false
 // 
 // Set to null to determine the value from the driver. 
 //
-Config_UseParameterBindings = false;  // true, false, null
+Config_UseParameterBindings = true;  // true, false, null
  
 // Override this setting to force the character escape value. 
 // This is typically done when you have set UseParameterBindings to false.
@@ -120,18 +120,12 @@ Config_UseCastInsteadOfConvert = null; // true, false, null
 Config_EnableDirectQuery = true;    // true, false
 
 [DataSource.Kind="SqlODBC", Publish="SqlODBC.Publish"]
-shared SqlODBC.Contents = (server as text) =>
+shared SqlODBC.Contents = (connstring as text) =>
     let
         //
         // Connection string settings
         //
-        ConnectionString = [
-            Driver = Config_DriverName,
-
-            // set all connection string properties
-            Server = server,
-            ApplicationIntent = "readonly"
-        ],
+        ConnectionString = connstring,
 
         //
         // Handle credentials
@@ -249,9 +243,9 @@ SqlODBC = [
     TestConnection = (dataSourcePath) => 
         let
             json = Json.Document(dataSourcePath),
-            server = json[server]   // name of function parameter
+            connstring = json[connstring]   // name of function parameter
         in
-            { "SqlODBC.Contents", server },
+            { "SqlODBC.Contents", connstring },
     // Set supported types of authentication
     Authentication = [
         Windows = [],
