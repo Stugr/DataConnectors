@@ -2,7 +2,7 @@
 // based on an ODBC driver. It is meant as a template for other 
 // ODBC based connectors that require similar functionality.
 // 
-section SqlODBC;
+section AmberSqlODBC;
 
 // When set to true, additional trace information will be written out to the User log. 
 // This should be set to false before release. Tracing is done through a call to 
@@ -21,7 +21,7 @@ EnableTraceOutput = true;
 
 // The name of your ODBC driver.
 //
-Config_DriverName = "Simba Athena ODBC Driver";
+Config_DriverName = "Simba Athena ODBC Driver"; // not actually used anymore
 
 // If your driver under-reports its SQL conformance level because it does not
 // support the full range of CRUD operations, but does support the ANSI SQL required
@@ -119,8 +119,8 @@ Config_UseCastInsteadOfConvert = null; // true, false, null
 //
 Config_EnableDirectQuery = true;    // true, false
 
-[DataSource.Kind="SqlODBC", Publish="SqlODBC.Publish"]
-shared SqlODBC.Contents = (connstring as text) =>
+[DataSource.Kind="AmberSqlODBC", Publish="AmberSqlODBC.Publish"]
+shared AmberSqlODBC.Contents = (connstring as text) =>
     let
         //
         // Connection string settings
@@ -232,7 +232,7 @@ shared SqlODBC.Contents = (connstring as text) =>
         OdbcDatasource;  
 
 // Data Source Kind description
-SqlODBC = [
+AmberSqlODBC = [
     // Set the TestConnection handler to enable gateway support.
     // The TestConnection handler will invoke your data source function to 
     // validate the credentials the user has provider. Ideally, this is not 
@@ -245,7 +245,7 @@ SqlODBC = [
             json = Json.Document(dataSourcePath),
             connstring = json[connstring]   // name of function parameter
         in
-            { "SqlODBC.Contents", connstring },
+            { "AmberSqlODBC.Contents", connstring },
     // Set supported types of authentication
     Authentication = [
         Windows = [],
@@ -255,7 +255,7 @@ SqlODBC = [
 ];
 
 // Data Source UI publishing description
-SqlODBC.Publish = [
+AmberSqlODBC.Publish = [
     Beta = true,
     Category = "Other",
     ButtonText = { Extension.LoadString("ButtonTitle"), Extension.LoadString("ButtonHelp") },
@@ -263,11 +263,11 @@ SqlODBC.Publish = [
 
     SupportsDirectQuery = Config_EnableDirectQuery,
 
-    SourceImage = SqlODBC.Icons,
-    SourceTypeImage = SqlODBC.Icons
+    SourceImage = AmberSqlODBC.Icons,
+    SourceTypeImage = AmberSqlODBC.Icons
 ];
 
-SqlODBC.Icons = [
+AmberSqlODBC.Icons = [
     Icon16 = { Extension.Contents("SqlODBC16.png"), Extension.Contents("SqlODBC20.png"), Extension.Contents("SqlODBC24.png"), Extension.Contents("SqlODBC32.png") },
     Icon32 = { Extension.Contents("SqlODBC32.png"), Extension.Contents("SqlODBC40.png"), Extension.Contents("SqlODBC48.png"), Extension.Contents("SqlODBC64.png") }
 ];

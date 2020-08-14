@@ -19,7 +19,7 @@
     <SuppressCellErrors>False</SuppressCellErrors>
     <MaxRows>1000</MaxRows>
     <ExtensionProject>Yes</ExtensionProject>
-    <Name>SqlODBC</Name>
+    <Name>AmberSqlODBC</Name>
     <ThrowOnFoldingFailure>True</ThrowOnFoldingFailure>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -38,7 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SqlODBC.pq">
+    <Compile Include="AmberSqlODBC.pq">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SqlODBC16.png">
@@ -74,7 +74,7 @@
     <Compile Include="OdbcConstants.pqm">
       <SubType>Content</SubType>
     </Compile>
-    <Content Include="SqlODBC.query.pq">
+    <Content Include="AmberSqlODBC.query.pq">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>
